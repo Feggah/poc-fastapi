@@ -18,5 +18,5 @@ async def generate_random_number():
 
 async def random_number():
     # Doing some asynchronous stuff to generate the number
-    await sleep(5)
+    await sleep(60)
     return randint(1, 100)
