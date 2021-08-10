@@ -1,0 +1,25 @@
+name: Adapt Repository
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-script:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Verify secrets
+        run: |
+          if [ -z ${{ secrets.MY_SECRET }} ] || [ -z ${{ secrets.MY_SECOND_SECRET }} ]; then
+            echo "Secrets aren't defined yet. Cancelling workflow..."
+            echo ${{ secrets.MY_SECRET }}
+            echo ${{ secrets.MY_SECOND_SECRET }}
+            exit 1
+          else
+            echo "Secrets populated!"
+          fi
+  dependant-job:
+    runs-on: ubuntu-20.04
+    needs: check-script
+    steps:
+      - name: Do some work
+        run: echo "Doing some work..."
